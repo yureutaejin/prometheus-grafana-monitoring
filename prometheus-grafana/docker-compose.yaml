@@ -1,0 +1,16 @@
+services:
+  prometheus:
+    extends:
+      file: ${PGM_HOME}/prometheus/docker-compose.yaml
+      service: prometheus
+  
+  grafana:
+    extends:
+      file: ${PGM_HOME}/grafana/docker-compose.yaml
+      service: grafana
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://prometheus:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

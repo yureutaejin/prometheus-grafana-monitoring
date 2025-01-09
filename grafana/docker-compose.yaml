@@ -1,0 +1,17 @@
+ services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_ACCOUNT}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_SECRET}
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    volumes:
+      - ${PGM_HOME}/grafana/dashboards/grafana.ini:/etc/grafana/grafana.ini
+      - ${PGM_HOME}/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ${PGM_HOME}/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ${PGM_HOME}/grafana/dashboards:/var/lib/grafana/dashboards

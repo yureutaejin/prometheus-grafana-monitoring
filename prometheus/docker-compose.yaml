@@ -13,4 +13,4 @@ services:
       - "--storage.tsdb.path=/prometheus/data"
       - "--storage.tsdb.retention.time=30d"
       - "--storage.tsdb.retention.size=10GB"
-    user: ${UID}:${GID}
+    user: "65534:65534"

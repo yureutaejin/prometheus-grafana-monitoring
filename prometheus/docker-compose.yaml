@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${PGM_HOME}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ${PROMETHEUS_DATA}:/prometheus/data
+      - prometheus-data:/prometheus/data
     ports:
       - 9090:9090
     command:
@@ -13,4 +13,8 @@ services:
       - "--storage.tsdb.path=/prometheus/data"
       - "--storage.tsdb.retention.time=30d"
       - "--storage.tsdb.retention.size=10GB"
-    user: "65534:65534"
+    user: root
+
+volumes:
+  prometheus-data:
+    name: prometheus-data

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  nvidia_dcgm_exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:3.3.8-3.6.0-ubuntu22.04
+    container_name: dcgm_exporter
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - 9400:9400

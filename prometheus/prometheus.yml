@@ -6,7 +6,7 @@ scrape_configs:
   - job_name: node-exporter
     scrape_interval: 3s
     static_configs:
-      - targets:
+      - targets:    # need to isolate `targets` value so that it can be inserted from another file or variable.
           - 192.168.1.101:9988
           - 100.115.141.98:9988
           - 100.73.172.71:9988

@@ -1,17 +1,23 @@
 services:
   prometheus:
     extends:
-      file: ${PGM_HOME}/prometheus/docker-compose.yaml
+      file: ./prometheus/compose.yaml
       service: prometheus
+    ports:
+      - 9090:9090
     networks: 
       - prometheus-grafana
   
   grafana:
     extends:
-      file: ${PGM_HOME}/grafana/docker-compose.yaml
+      file: ./grafana/compose.yaml
       service: grafana
     networks:
       - prometheus-grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
     healthcheck:
       test: ["CMD", "curl", "-f", "http://prometheus:9090/-/healthy"]
       interval: 30s

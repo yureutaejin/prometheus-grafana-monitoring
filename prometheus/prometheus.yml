@@ -10,3 +10,6 @@ scrape_configs:
           - yureutae-server-1.tail5c961c.ts.net:9988
           - yureutae-server-2.tail5c961c.ts.net:9988
           - yureutae-server-3.tail5c961c.ts.net:9988
+
+rule_files:
+  - "./alert_rules.yml"

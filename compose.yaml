@@ -7,6 +7,15 @@ services:
       - 9090:9090
     networks: 
       - prometheus-grafana
+
+  alertmanager:
+    extends:
+      file: ./alertmanager/compose.yaml
+      service: alertmanager
+    ports:
+      - 9093:9093
+    networks:
+      - prometheus-grafana
   
   grafana:
     extends:

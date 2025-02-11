@@ -7,7 +7,7 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
     network_mode: host
     pid: host
-    restart: unless-stopped
+    restart: always
     cap_add:
       - SYS_ADMIN
     ports:

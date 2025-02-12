@@ -1,5 +1,5 @@
 global:
-  resolve_timeout: 5m
+  resolve_timeout: 2m
 
 route:
   receiver: "slack-alerts"
@@ -14,5 +14,23 @@ receivers:
       - api_url: ${SLACK_WEBHOOK_URL}
         channel: ${SLACK_CHANNEL}
         send_resolved: true
-        title: "{{ .CommonAnnotations.summary }}"
-        text: "{{ .CommonAnnotations.description }}"
+        title: >-
+          {{ if eq .Status "firing" }}
+            🚨 Alert: Machine Health Alerts - {{ .CommonLabels.instance }}
+          {{ else }}
+            ✅ Resolved: Machine Health Alerts - {{ .CommonLabels.instance }}
+          {{ end }}
+        text: >-
+          {{ if eq .Status "firing" }}
+            Alert Details:
+            - Instance: {{ .CommonLabels.instance }}
+            - Job: {{ .CommonLabels.job }}
+            - Severity: {{ .CommonLabels.severity }}
+            - Description: {{ .CommonAnnotations.description }}
+          {{ else }}
+            Resolved Details:
+            - Instance: {{ .CommonLabels.instance }}
+            - Job: {{ .CommonLabels.job }}
+            - Severity: {{ .CommonLabels.severity }}
+            - The `Machine down` issue has been resolved at {{ .CommonLabels.instance }}.
+          {{ end }}

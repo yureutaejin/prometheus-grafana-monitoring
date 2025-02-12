@@ -1,11 +1,12 @@
 groups:
-  - name: TargetHealthAlerts
+  - name: TargetMachineHealth
     rules:
-      - alert: TargetDown
+      - alert: TargetMachineDown
         expr: up{job="node-exporter"} == 0
         for: 1m
         labels:
           severity: critical
+          layer: machine
         annotations:
           summary: "Machine Down Alert: {{ $labels.job }} at {{ $labels.instance }}"
           description: "The target {{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute."
